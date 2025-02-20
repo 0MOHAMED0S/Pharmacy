@@ -25,7 +25,7 @@ Route::get('/login/google', [PharmacyGoogleController::class, 'redirectToGoogle'
 Route::get('/login/google/callback', [PharmacyGoogleController::class, 'handleGoogleCallback']);
 Route::post('/pharmacy/logout', [PharmacyGoogleController::class, 'logout'])->name('pharmacy.logout');
 
-Route::resource('medicines',MedicineController::class)->middleware('auth:pharmacy');
-Route::get('/pharmacy/profile', [PharmacyProfileController::class, 'index'])->middleware('auth:pharmacy')->name('profile.index');
+Route::resource('medicines',MedicineController::class)->middleware('auth.pharmacy');
+Route::get('/pharmacy/profile', [PharmacyProfileController::class, 'index'])->middleware('auth.pharmacy')->name('profile.index');
 
 // require __DIR__.'/auth.php';
