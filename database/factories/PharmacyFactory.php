@@ -27,6 +27,7 @@ class PharmacyFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'code' => "GbiaXM",
+            'google_id'=>"102736598776507148394",
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
