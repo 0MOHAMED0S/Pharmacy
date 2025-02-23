@@ -40,5 +40,10 @@ return [
     'redirect' => env('GOOGLE_REDIRECT_URI'),
     'access_type' => 'offline',
 ],
-
+'mqtt' => [
+    'host' => env('MQTT_HOST', '127.0.0.1'),
+    'port' => env('MQTT_PORT', 1883),
+    'username' => env('MQTT_USER', 'user'),
+    'password' => env('MQTT_PASSWORD', 'password'),
+],
 ];

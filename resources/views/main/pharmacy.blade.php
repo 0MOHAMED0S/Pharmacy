@@ -105,18 +105,52 @@
         <div class="medicine-container">
             @foreach ($medicines as $medicine)
                 <div class="medicine-card">
-                    <img src="{{ asset('storage/'.$medicine->path) }}" alt="{{ $medicine->name }}">
+                    <img src="{{ asset('storage/' . $medicine->path) }}" alt="{{ $medicine->name }}">
                     <h3>{{ $medicine->name }}</h3>
                     <p>Quantity: {{ $medicine->quantity }}</p>
                     <p>Price: ${{ $medicine->price }}</p>
-                    <a href="#" class="btn">Order Now</a>
+                    <button class="btn order-btn" data-id="{{ $medicine->id }}">Order Now</button>
                 </div>
             @endforeach
+
+            <!-- CSRF Token (Important for Laravel POST requests) -->
+            <meta name="csrf-token" content="{{ csrf_token() }}">
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    document.querySelectorAll(".order-btn").forEach(button => {
+                        button.addEventListener("click", function() {
+                            let medicineId = this.getAttribute("data-id");
+
+                            fetch("/order-medicine", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "X-CSRF-TOKEN": document.querySelector(
+                                            'meta[name="csrf-token"]').getAttribute("content")
+                                    },
+                                    body: JSON.stringify({
+                                        id: medicineId
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    alert(`Order Placed! Medicine ID: ${data.medicine_id}`);
+                                })
+                                .catch(error => console.error("Error:", error));
+                        });
+                    });
+                });
+            </script>
+
+
         </div>
     </section>
 
     <footer>
         <p>&copy; 2025 Pharmacy. All rights reserved.</p>
     </footer>
+
 </body>
+
 </html>

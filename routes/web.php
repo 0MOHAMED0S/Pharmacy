@@ -7,6 +7,9 @@ use App\Http\Controllers\Pharmacy\ProfileController as PharmacyProfileController
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use PhpMqtt\Client\MqttClient;
+use PhpMqtt\Client\ConnectionSettings;
+use App\Http\Controllers\MedicineOrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,4 +38,4 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 });
-// require __DIR__.'/auth.php';
+Route::post('/order-medicine', [MedicineOrderController::class, 'orderMedicine']);
