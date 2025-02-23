@@ -46,4 +46,9 @@ class Pharmacy extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function medicines()
+{
+    return $this->hasMany(Medicine::class);
+}
+
 }

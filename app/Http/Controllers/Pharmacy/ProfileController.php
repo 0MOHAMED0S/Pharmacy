@@ -11,7 +11,13 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $qrcode = QrCode::size(200)->generate(Auth::guard('pharmacy')->user()->code);
+        $baseUrl = request()->getSchemeAndHttpHost(); // Gets the current scheme (http/https) and host
+        $userCode = Auth::guard('pharmacy')->user()->code;
+        $fullUrl = "{$baseUrl}/pharmacy/{$userCode}";
+    
+        $qrcode = QrCode::size(200)->generate($fullUrl);
+    
         return view('main.profile', compact('qrcode'));
     }
+    
 }

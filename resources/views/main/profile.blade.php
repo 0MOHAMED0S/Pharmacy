@@ -86,7 +86,13 @@
                                 @endif
                             </div>
                         </form>
-
+                        <form method="POST" action="{{ route('pharmacy.logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item">
+                                <i class="fa fa-power-off me-1 ms-1"></i>
+                                {{ __('Log Out') }}
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -12,6 +12,10 @@ use Laravel\Socialite\Facades\Socialite;
 
 class PharmacyGoogleController extends Controller
 {
+    public function index()
+{
+    return view('main.AdminLogin');
+}
     public function redirectToGoogle(): RedirectResponse
     {
         return Socialite::driver('google')->redirect();
@@ -23,23 +27,9 @@ class PharmacyGoogleController extends Controller
 
         if ($existingUser) {
             Auth::guard('pharmacy')->login($existingUser);
-        } else {
-            do {
-                $code = Str::random(6);
-            } while (Pharmacy::where('code', $code)->exists());
-
-            $newUser = Pharmacy::create([
-                'name' => $user->name,
-                'email' => $user->email,
-                'google_id' => $user->id,
-                'code' => $code,
-                'password' => bcrypt(Str::random(16)),
-            ]);
-
-            Auth::guard('pharmacy')->login($newUser);
+            return redirect()->route('profile.index');
         }
-
-        return redirect()->route('medicines.create');
+        return redirect()->route('admin.login')->with('error','Error');
     }
     public function logout(Request $request): RedirectResponse
     {
@@ -51,3 +41,18 @@ class PharmacyGoogleController extends Controller
         return redirect('/'); // Redirect to homepage or login page
     }
 }
+// else {
+//     do {
+//         $code = Str::random(6);
+//     } while (Pharmacy::where('code', $code)->exists());
+
+//     $newUser = Pharmacy::create([
+//         'name' => $user->name,
+//         'email' => $user->email,
+//         'google_id' => $user->id,
+//         'code' => $code,
+//         'password' => bcrypt(Str::random(16)),
+//     ]);
+
+//     Auth::guard('pharmacy')->login($newUser);
+// }

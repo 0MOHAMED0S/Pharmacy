@@ -165,14 +165,8 @@
 
 <body>
     <header>
-        <h1>Welcome to Our Pharmacy</h1>
+        <h1>Welcome to Our Smart Pharmacy</h1>
         <p>Your Trusted Source for Quality Healthcare</p>
-
-        @if(Auth::guard('pharmacy')->check())
-            <a class="btn" href="{{ route('medicines.index') }}">Your Pharmacy</a>
-        @else
-            <a class="btn" href="{{ route('auth.google') }}">Sign in with Google</a>
-        @endif
     </header>
 
 
