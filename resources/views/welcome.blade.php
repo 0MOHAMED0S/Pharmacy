@@ -2,205 +2,244 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pharmacy - Quality Healthcare</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pharmacy – Smart Healthcare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
             margin: 0;
-            padding: 0;
-            text-align: center;
-            background-color: #f4f7fc;
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7fc;
             color: #333;
-            overflow-x: hidden;
+            line-height: 1.6;
         }
 
         header {
             background: linear-gradient(135deg, #0073e6, #003366);
             color: white;
             padding: 80px 20px;
-            animation: fadeIn 2s ease-in-out;
+            text-align: center;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 14px 28px;
-            margin-top: 20px;
-            background-color: #ff6600;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn:hover {
-            background-color: #cc5200;
-            transform: scale(1.1);
+        h1,
+        h2 {
+            margin-bottom: 15px;
+            font-weight: 600;
         }
 
         section {
             padding: 60px 20px;
-            animation: slideUp 1.5s ease-in-out;
+            max-width: 1000px;
+            margin: 30px auto;
             background: white;
-            margin: 20px auto;
-            max-width: 900px;
             border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
         }
 
-        section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        section:hover::before {
-            opacity: 1;
-        }
-
-        .about-content,
-        .services-content,
-        .contact-content {
+        .feature-wrapper {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             justify-content: center;
-            flex-direction: column;
+            gap: 20px;
+        }
+
+        .feature-card {
+            width: 48%;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            padding: 30px 20px;
             text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         .icon {
-            font-size: 50px;
-            color: #0073e6;
+            font-size: 40px;
             margin-bottom: 10px;
+            color: #0073e6;
         }
 
-        ul {
-            list-style: none;
-            padding: 0;
+        .about-text p,
+        .contact-text p {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            text-align: center;
         }
 
-        ul li {
-            font-size: 18px;
-            margin: 10px 0;
-            opacity: 0;
-            animation: fadeInUp 1s ease-in-out forwards;
+        .contact-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
         }
 
-        ul li:nth-child(1) {
-            animation-delay: 0.3s;
+        .contact-item {
+            background: #f1f5fb;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            min-width: 250px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
         }
 
-        ul li:nth-child(2) {
-            animation-delay: 0.6s;
-        }
-
-        ul li:nth-child(3) {
-            animation-delay: 0.9s;
-        }
-
-        ul li:nth-child(4) {
-            animation-delay: 1.2s;
+        .contact-item span {
+            font-size: 22px;
+            color: #0073e6;
         }
 
         footer {
-            background-color: #222;
+            background: #222;
             color: white;
             padding: 20px;
-            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
+        @media (max-width: 600px) {
+            .feature-card {
+                width: 100%;
             }
         }
+        .google-login-btn {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 10px;
+    background-color: #fff;
+    color: #444;
+    font-weight: 600;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
 
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
+.google-login-btn:hover {
+    background-color: #f1f1f1;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+.google-icon {
+    width: 20px;
+    height: 20px;
+}
 
-        @keyframes fadeInUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 
 <body>
+
     <header>
-        <h1>Welcome to Our Smart Pharmacy</h1>
-        <p>Your Trusted Source for Quality Healthcare</p>
+        <h1><i class="fas fa-prescription-bottle-alt"></i> Smart Pharmacy</h1>
+        <p>Bringing Healthcare to Your Fingertips</p>
+@php
+    $isLoggedIn = Auth::guard('pharmacy')->check() || Auth::guard('web')->check();
+@endphp
+
+@if (! $isLoggedIn)
+    <center class="mt-4">
+    <a href="{{ route('login') }}" class="google-login-btn text-decoration-none">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="google-icon">
+        <span>Login with Google</span>
+    </a>
+</center>
+
+@endif
+
     </header>
 
+    <section id="features">
+        <center>
+            <h2>Explore Our Services</h2>
+        </center>
+        <div class="feature-wrapper">
+            <a href="{{ route('chat.index') }}" class="feature-card">
+                <div class="icon">🤖</div>
+                <h5>Chatbot</h5>
+            </a>
+            <a href="{{route('advice.daily')}}" class="feature-card">
+                <div class="icon">💡</div>
+                <h5>Advice</h5>
+            </a>
+            <a href="{{ route('pharmacy.index') }}" class="feature-card">
+                <div class="icon">🛒</div>
+                <h5>Order</h5>
+            </a>
 
+@php
+    $profileRoute = Auth::guard('pharmacy')->check()
+        ? route('profile.index')
+        : (Auth::guard('web')->check()
+            ? route('profile.show')
+            : route('login'));
+@endphp
+
+<a href="{{ $profileRoute }}" class="feature-card">
+    <div class="icon">👤</div>
+    <h5>Profile</h5>
+</a>
+
+
+
+        </div>
+    </section>
 
     <section id="about">
-        <div class="about-content">
-            <div class="icon">💊</div>
+        <center>
             <h2>About Us</h2>
-            <p>We provide top-quality medicines with no hassle. Order online and pick up your prescription easily.</p>
+        </center>
+        <div class="about-text">
+            <p>
+                Smart Pharmacy is on a mission to modernize how healthcare is delivered. From AI-powered chat support to
+                simple medicine ordering,
+                our goal is to give you the tools to manage your health faster, smarter, and with confidence.
+            </p>
+            <p>
+                We believe that technology should empower people. Our team of developers, pharmacists, and health
+                experts work together to ensure that
+                Smart Pharmacy stays reliable, human-centered, and accessible to everyone.
+            </p>
         </div>
     </section>
-    <section id="services">
-        <div class="services-content">
-            <div class="icon">⚕️</div>
-            <h2>Our Services</h2>
-            <ul>
-                <li>✅ Prescription Refills</li>
-                <li>✅ Over-the-Counter Medications</li>
-                <li>✅ Online Consultations</li>
-                <li>✅ Fast Delivery</li>
-            </ul>
-        </div>
-    </section>
+
     <section id="contact">
-        <div class="contact-content">
-            <div class="icon">📞</div>
+        <center>
             <h2>Contact Us</h2>
-            <p>Email: <strong>contact@pharmacy.com</strong></p>
-            <p>Phone: <strong>+123 456 7890</strong></p>
+        </center>
+        <div class="contact-text">
+            <p>If you need help or want to give us feedback, we’re here for you.</p>
+        </div>
+        <div class="contact-details">
+            <div class="contact-item"><span>📧</span> support@smartpharmacy.com</div>
+            <div class="contact-item"><span>📞</span> +123 456 7890</div>
+            <div class="contact-item"><span>📍</span> 123 Health Street, Cairo, Egypt</div>
         </div>
     </section>
+
     <footer>
-        <p>&copy; 2025 Pharmacy. All rights reserved.</p>
+        <p>&copy; 2025 Smart Pharmacy. All rights reserved.</p>
     </footer>
+
 </body>
 
 </html>

@@ -10,6 +10,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use PhpMqtt\Client\MqttClient;
 use PhpMqtt\Client\ConnectionSettings;
 use App\Http\Controllers\MedicineOrderController;
+use App\Http\Controllers\Pharmacy\AdviceController;
+use App\Http\Controllers\Pharmacy\ChatController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,20 +24,36 @@ Route::get('/', function () {
 Route::middleware('auth:pharmacy')->group(function () {
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/pharmacy/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/pharmacy/logout', [PharmacyGoogleController::class, 'logout'])->name('pharmacy.logout');
     Route::get('/pharmacy/profile', [PharmacyProfileController::class, 'index'])->name('profile.index');
-    Route::resource('medicines',MedicineController::class);
+    Route::resource('medicines', MedicineController::class);
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// GoogleLoginController redirect and callback urls
-Route::get('/admin/login', [PharmacyGoogleController::class, 'index'])->name('admin.login');
-Route::get('/login/google', [PharmacyGoogleController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('/login/google/callback', [PharmacyGoogleController::class, 'handleGoogleCallback']);
-Route::get('/pharmacy/{code}', [PharmacyController::class, 'index'])->name('pharmacy.index');
+Route::middleware(['auth.any'])->group(function () {
+    Route::post('/pharmacy/logout', [PharmacyGoogleController::class, 'logout'])->name('pharmacy.logout');
+    //Chat
+Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
+//Pharmacy
+Route::get('/pharmacy', [PharmacyController::class, 'index'])->name('pharmacy.index');
+Route::post('/order-medicine', [MedicineOrderController::class, 'orderMedicine']);
+});
+
+// Route::get('/pharmacy/{code}', [PharmacyController::class, 'index'])->name('pharmacy1.index');
 
 Route::middleware('guest')->group(function () {
+    Route::get('/login/google', [PharmacyGoogleController::class, 'redirectToGoogle'])->name('login');
+    Route::get('/login/google/callback', [PharmacyGoogleController::class, 'handleGoogleCallback']);
+
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+        ->name('auth.login');
 });
-Route::post('/order-medicine', [MedicineOrderController::class, 'orderMedicine']);
+
+
+Route::middleware('auth')->group(function () {
+//profile
+Route::get('/profile', [PharmacyProfileController::class, 'show'])->name('profile.show');
+Route::post('/profile/update-disease', [PharmacyProfileController::class, 'updateDisease'])->name('profile.update.disease');
+});
+
+Route::middleware(['auth'])->get('/daily-advice', [AdviceController::class, 'showDailyAdvice'])->name('advice.daily');

@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
         Pharmacy::factory()->create([
             'name' => 'First Pharmacy',
             'email' => 'msa0back@gmail.com',
+            'google_id' => '102736598776507148394',
+            'code' => 'DefaultPharma01',
+            'password' => bcrypt('securepassword'), // Set a known password
         ]);
     }
 }
