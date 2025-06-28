@@ -57,3 +57,6 @@ Route::post('/profile/update-disease', [PharmacyProfileController::class, 'updat
 });
 
 Route::middleware(['auth'])->get('/daily-advice', [AdviceController::class, 'showDailyAdvice'])->name('advice.daily');
+
+Route::post('/medicine/search', [MedicineController::class, 'search']);
+Route::get('/scan', [MedicineController::class, 'scan'])->name('scan');

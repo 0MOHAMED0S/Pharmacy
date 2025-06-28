@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 class MedicineController extends Controller
 {
@@ -78,4 +79,26 @@ class MedicineController extends Controller
         }
     }
 
+public function search(Request $request)
+{
+    $name = $request->input('name');
+
+    $response = Http::get('https://api.fda.gov/drug/label.json', [
+        'search' => "openfda.brand_name:$name",
+        'limit' => 1
+    ]);
+
+    if ($response->successful() && isset($response['results'][0])) {
+        $data = $response['results'][0];
+        return view('pages.scan.result', [
+            'name' => $name,
+            'description' => $data['description'][0] ?? 'No description available'
+        ]);
+    }
+
+    return back()->with('error', 'Medicine not found.');
+}
+public function scan(){
+    return view('pages.scan.scan');
+}
 }
