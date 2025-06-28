@@ -133,7 +133,7 @@
                 <div class="medicine-card-body">
                     <h3>{{ $medicine->name }}</h3>
                     <p class="medicine-info">Quantity: {{ $medicine->quantity }}</p>
-                    <p class="price">${{ $medicine->price }}</p>
+                    <p class="price"> {{ $medicine->price }} EGP</p>
                     <button class="order-btn" data-id="{{ $medicine->id }}">Order Now</button>
                 </div>
             </div>
