@@ -82,24 +82,40 @@
         alert("Camera access error: " + err);
     });
 
-    function capture() {
-        output.textContent = "-";
-        loading.textContent = "Recognizing text...";
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const imageData = canvas.toDataURL('image/png');
+function capture() {
+    output.textContent = "-";
+    loading.textContent = "Enhancing image & recognizing...";
 
-        Tesseract.recognize(imageData, 'eng', {
-            logger: m => console.log(m)
-        }).then(({ data: { text } }) => {
-            const cleaned = text.trim().split('\n')[0]; // get first line
-            document.getElementById('medicine-name').value = cleaned;
-            output.textContent = cleaned || "No text found";
-            loading.textContent = "";
-            submitBtn.style.display = cleaned ? 'inline-block' : 'none';
-        }).catch(() => {
-            loading.textContent = "Failed to recognize text.";
-        });
+    // Draw the image from video to canvas
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // Get image data from canvas
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    // Basic preprocessing: grayscale + threshold (binarize)
+    for (let i = 0; i < data.length; i += 4) {
+        const avg = (data[i] + data[i+1] + data[i+2]) / 3;
+        const threshold = avg > 140 ? 255 : 0;  // simple contrast
+        data[i] = data[i+1] = data[i+2] = threshold; // RGB
     }
+    ctx.putImageData(imageData, 0, 0); // write back to canvas
+
+    const enhancedImage = canvas.toDataURL('image/png');
+
+    Tesseract.recognize(enhancedImage, 'eng', {
+        logger: m => console.log(m)
+    }).then(({ data: { text } }) => {
+        const cleaned = text.trim().split('\n')[0]; // first line
+        document.getElementById('medicine-name').value = cleaned;
+        output.textContent = cleaned || "No text found";
+        loading.textContent = "";
+        submitBtn.style.display = cleaned ? 'inline-block' : 'none';
+    }).catch(() => {
+        loading.textContent = "Failed to recognize text.";
+    });
+}
+
 </script>
 
 </body>
