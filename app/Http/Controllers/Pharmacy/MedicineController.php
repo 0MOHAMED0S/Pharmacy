@@ -90,9 +90,11 @@ public function search(Request $request)
 
     if ($response->successful() && isset($response['results'][0])) {
         $data = $response['results'][0];
-        return view('pages.scan.result', [
-            'name' => $name,
-            'description' => $data['description'][0] ?? 'No description available'
+        return view('your_view_name', [
+            'medicine' => [
+                'name' => $name,
+                'description' => $data['description'][0] ?? 'No description available'
+            ]
         ]);
     }
 
