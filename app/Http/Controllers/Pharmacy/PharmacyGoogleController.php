@@ -45,7 +45,7 @@ class PharmacyGoogleController extends Controller
     'name' => $googleUser->name,
     'email' => $googleUser->email,
     'google_id' => $googleUser->id,
-        'disease' => null,
+    'disease' => null,
     'password' => Hash::make(Str::random(16)), // random unguessable dummy password
 ]);
 

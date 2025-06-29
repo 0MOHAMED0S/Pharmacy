@@ -54,9 +54,9 @@ Route::middleware('auth')->group(function () {
 //profile
 Route::get('/profile', [PharmacyProfileController::class, 'show'])->name('profile.show');
 Route::post('/profile/update-disease', [PharmacyProfileController::class, 'updateDisease'])->name('profile.update.disease');
+Route::post('/medicine/search', [MedicineController::class, 'search'])->name('medicine.search');
+Route::get('/search', [MedicineController::class, 'scan'])->name('scan');
 });
 
 Route::middleware(['auth'])->get('/daily-advice', [AdviceController::class, 'showDailyAdvice'])->name('advice.daily');
 
-Route::post('/medicine/search', [MedicineController::class, 'search']);
-Route::get('/scan', [MedicineController::class, 'scan'])->name('scan');

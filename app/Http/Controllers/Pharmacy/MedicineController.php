@@ -83,23 +83,40 @@ public function search(Request $request)
 {
     $name = $request->input('name');
 
-    $response = Http::get('https://api.fda.gov/drug/label.json', [
-        'search' => "openfda.brand_name:$name",
-        'limit' => 1
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . env('OPENROUTER_API_KEY'),
+        'Content-Type' => 'application/json',
+    ])->post('https://openrouter.ai/api/v1/chat/completions', [
+        'model' => 'mistralai/mistral-7b-instruct',
+        'messages' => [
+            [
+                'role' => 'system',
+                'content' => 'You are a helpful medical assistant. Keep responses clear and safe for general users.'
+            ],
+            [
+                'role' => 'user',
+                'content' => "Describe the medicine '$name'. Include its medical use, how it works, and common side effects."
+            ],
+        ],
+        'temperature' => 0.5,
     ]);
 
-    if ($response->successful() && isset($response['results'][0])) {
-        $data = $response['results'][0];
-        return view('your_view_name', [
+    $json = $response->json();
+
+    if ($response->successful() && isset($json['choices'][0]['message']['content'])) {
+        $description = $json['choices'][0]['message']['content'];
+
+        return redirect()->back()->with([
             'medicine' => [
                 'name' => $name,
-                'description' => $data['description'][0] ?? 'No description available'
+                'description' => $description,
             ]
         ]);
     }
 
-    return back()->with('error', 'Medicine not found.');
+    return redirect()->back()->with('error', 'AI failed to generate a description.');
 }
+
 public function scan(){
     return view('pages.scan.scan');
 }

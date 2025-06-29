@@ -179,15 +179,18 @@
                 <div class="icon">🤖</div>
                 <h5>Chatbot</h5>
             </a>
+             <a href="{{ route('pharmacy.index') }}" class="feature-card">
+                <div class="icon">🛒</div>
+                <h5>Order</h5>
+            </a>
             <a href="{{route('advice.daily')}}" class="feature-card">
                 <div class="icon">💡</div>
                 <h5>Advice</h5>
             </a>
-            <a href="{{ route('pharmacy.index') }}" class="feature-card">
-                <div class="icon">🛒</div>
-                <h5>Order</h5>
+            <a href="{{ route('scan') }}" class="feature-card">
+                <div class="icon">🔍</div>
+                <h5>Search</h5>
             </a>
-
 @php
     $profileRoute = Auth::guard('pharmacy')->check()
         ? route('profile.index')
